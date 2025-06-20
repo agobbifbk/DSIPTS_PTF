@@ -47,7 +47,8 @@ def compare(conf:DictConfig)-> None:
             continue
         beauty_string(f'Processing file: {conf_tmp}','block',VERBOSE)
         conf_tmp =  OmegaConf.load(conf_tmp) 
-        
+        #import pdb
+        #pdb.set_trace()
         conf_tmp.inference.set = conf.set
         conf_tmp.inference.rescaling = conf.rescaling
         conf_tmp.inference.batch_size = conf.get('batch_size',conf_tmp.inference.batch_size)
@@ -55,6 +56,7 @@ def compare(conf:DictConfig)-> None:
         beauty_string(f'PROCESSING {conf_tmp.model.type}_{conf_tmp.ts.name}_{conf_tmp.ts.version}','section',VERBOSE)
 
         try:
+           
             tmp,predictions, losses = inference(conf_tmp)
             if tmp is not None:
                 tmp['model'] = f'{conf_tmp.model.type}_{conf_tmp.ts.name}_{conf_tmp.ts.version}'
